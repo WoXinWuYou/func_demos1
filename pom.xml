@@ -189,5 +189,6 @@
     <packaging>pom</packaging>
     <modules>
     	<module>spring_validation</module>
+    	<module>common_func</module>
     </modules>
 </project>
