@@ -2,12 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
 	<groupId>com.lmj</groupId>
 	<artifactId>func_demos1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -27,6 +21,7 @@
 		<!-- <guava.version>17.0</guava.version> -->
 		<guava.version>28.0-jre</guava.version>
 		<swagger2.version>2.9.2</swagger2.version>
+		<mybatis-plus.version>3.2.0</mybatis-plus.version>
 	</properties>
 	
 	<!-- dependencyManagement里只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖。默认查找这里的版本号 -->
@@ -190,5 +185,8 @@
     <modules>
     	<module>spring_validation</module>
     	<module>common_func</module>
+    	<module>swagger_api</module>
+    	<module>webservice_call</module>
+    	<module>mybatis_plus_auto_generator</module>
     </modules>
 </project>
