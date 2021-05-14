@@ -21,7 +21,7 @@
 		<!-- <guava.version>17.0</guava.version> -->
 		<guava.version>28.0-jre</guava.version>
 		<swagger2.version>2.9.2</swagger2.version>
-		<mybatis-plus.version>3.2.0</mybatis-plus.version>
+		<mybatis-plus.version>3.3.2</mybatis-plus.version>
 	</properties>
 	
 	<!-- dependencyManagement里只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖。默认查找这里的版本号 -->
@@ -50,6 +50,17 @@
 	            <artifactId>mybatis-generator-core</artifactId>
 	            <version>${mybatis.generator.version}</version>
 	        </dependency>
+	        <dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter</artifactId>
+	            <version>${mybatis-plus.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-generator</artifactId>
+	            <version>${mybatis-plus.version}</version>
+			</dependency>
 			<!-- 数据源 -->
 			<dependency>
 				<groupId>com.alibaba</groupId>

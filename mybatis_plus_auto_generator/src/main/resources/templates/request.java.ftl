@@ -1,5 +1,4 @@
-<#assign requestPackage=package.Entity?replace("entity","request")/>
-package ${requestPackage};
+package ${cfg.requestPackage};
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,6 +14,7 @@ import lombok.EqualsAndHashCode;
 import java.math.BigDecimal;
 </#if>
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import ${cfg.requestSuperClass};
 
 /**

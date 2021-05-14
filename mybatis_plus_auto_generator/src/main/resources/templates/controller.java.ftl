@@ -1,4 +1,4 @@
-package ${package.Controller};
+package ${cfg.serverPackage};
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,11 +12,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 import java.util.function.Function;
 import ${package.Service}.${table.serviceName};
-import ${package.Entity}.${entity};
-<#assign requestPackage=package.Entity?replace("entity","request")/>
-import ${requestPackage}.${entity}Request;
-<#assign voPackage=package.Entity?replace("entity","vo")/>
-import ${voPackage}.${entity}VO;
+import ${cfg.modelPackage}.${entity};
+import ${cfg.requestPackage}.${entity}Request;
+import ${cfg.voPackage}.${entity}Vo;
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
 <#else>
@@ -75,14 +73,14 @@ public class ${table.controllerName} {
     @ResponseBody
     @PostMapping("/list")
     @ApiOperation(value = "列表", notes = "列表")
-    public R<IPage<${entity}VO>> list(@RequestBody ${entity}Request ${table.entityPath}Request) {
+    public R<IPage<${entity}Vo>> list(@RequestBody ${entity}Request ${table.entityPath}Request) {
         ${entity} ${table.entityPath} = CommonUtils.convertBean(${table.entityPath}Request,${entity}.class);
         QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>().setEntity(${table.entityPath});
         IPage<${entity}> iPage = ${table.entityPath}Service.page(new Page<>(${table.entityPath}Request.getCurrPage(),${table.entityPath}Request.getPageSize()),queryWrapper);
-        IPage<${entity}VO> result = iPage.convert(new Function<${entity}, ${entity}VO>() {
+        IPage<${entity}Vo> result = iPage.convert(new Function<${entity}, ${entity}Vo>() {
             @Override
-            public ${entity}VO apply(${entity} ${table.entityPath}) {
-                return CommonUtils.convertBean(${table.entityPath},${entity}VO.class);
+            public ${entity}Vo apply(${entity} ${table.entityPath}) {
+                return CommonUtils.convertBean(${table.entityPath},${entity}Vo.class);
             }
         });
         return R.success(result);
@@ -94,13 +92,13 @@ public class ${table.controllerName} {
     @ResponseBody
     @PostMapping("/info")
     @ApiOperation(value = "详情", notes = "详情")
-    public R<${entity}VO> info(@RequestBody ${entity}Request ${table.entityPath}Request) {
-        if (${table.entityPath}Request.getId() == null) {
-            return R.fail("缺少主键id!");
-        }
+    public R<${entity}Vo> info(@RequestBody ${entity}Request ${table.entityPath}Request) {
+        //if (${table.entityPath}Request.getId() == null) {
+        //    return R.fail("缺少主键id!");
+        //}
         ${entity} ${table.entityPath} = CommonUtils.convertBean(${table.entityPath}Request,${entity}.class);
         ${entity} data =  ${table.entityPath}Service.getOne(new QueryWrapper<${entity}>().setEntity(${table.entityPath}));
-        return R.success(CommonUtils.convertBean(data,${entity}VO.class));
+        return R.success(CommonUtils.convertBean(data,${entity}Vo.class));
     }
 
 
@@ -112,8 +110,8 @@ public class ${table.controllerName} {
     @ApiOperation(value = "新增", notes = "新增")
     public R save(@RequestBody ${entity}Request ${table.entityPath}Request) {
         ${entity} ${table.entityPath} = CommonUtils.convertBean(${table.entityPath}Request,${entity}.class);
-        TSysUser currUser = getCurrentUser();
-        ${table.entityPath}.setCreator(currUser.getAccount());
+        SysUser currUser = getCurrentUser();
+        //${table.entityPath}.setCreator(currUser.getAccount());
         ${table.entityPath}Service.save(${table.entityPath});
         return R.success();
     }
@@ -126,12 +124,12 @@ public class ${table.controllerName} {
     @PostMapping("/update")
     @ApiOperation(value = "更新", notes = "更新")
     public R update(@RequestBody ${entity}Request ${table.entityPath}Request) {
-        if (${table.entityPath}Request.getId() == null) {
-            return R.fail("缺少主键id!");
-        }
+        //if (${table.entityPath}Request.getId() == null) {
+          //  return R.fail("缺少主键id!");
+        //}
         ${entity} ${table.entityPath} = CommonUtils.convertBean(${table.entityPath}Request,${entity}.class);
-        TSysUser currUser = getCurrentUser();
-        ${table.entityPath}.setCreator(currUser.getAccount());
+        SysUser currUser = getCurrentUser();
+        //${table.entityPath}.setCreator(currUser.getAccount());
         ${table.entityPath}Service.updateById(${table.entityPath});
         return R.success();
     }
@@ -143,9 +141,9 @@ public class ${table.controllerName} {
     @PostMapping("/delete")
     @ApiOperation(value = "删除", notes = "删除")
     public R delete(@RequestBody ${entity}Request ${table.entityPath}Request) {
-        if (${table.entityPath}Request.getId() == null) {
-            return R.fail("缺少主键id!");
-        }
+        //if (${table.entityPath}Request.getId() == null) {
+          //  return R.fail("缺少主键id!");
+        //}
         ${entity} ${table.entityPath} = CommonUtils.convertBean(${table.entityPath}Request,${entity}.class);
         ${table.entityPath}Service.remove(new QueryWrapper<${entity}>().setEntity(${table.entityPath}));
         return R.success();
@@ -161,13 +159,13 @@ public class ${table.controllerName} {
         ${entity} ${table.entityPath} = CommonUtils.convertBean(${table.entityPath}Request,${entity}.class);
         QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>().setEntity(${table.entityPath});
         IPage<${entity}> iPage = ${table.entityPath}Service.page(new Page<>(${table.entityPath}Request.getCurrPage(),${table.entityPath}Request.getPageSize()),queryWrapper);
-        IPage<${entity}VO> result = iPage.convert(new Function<${entity}, ${entity}VO>() {
+        IPage<${entity}Vo> result = iPage.convert(new Function<${entity}, ${entity}Vo>() {
             @Override
-            public ${entity}VO apply(${entity} ${table.entityPath}) {
-                return CommonUtils.convertBean(${table.entityPath},${entity}VO.class);
+            public ${entity}Vo apply(${entity} ${table.entityPath}) {
+                return CommonUtils.convertBean(${table.entityPath},${entity}Vo.class);
             }
         });
-        EasyPoiUtil.exportExcel(result.getRecords(),"${table.comment!}","第一页",${entity}VO.class,"${table.comment!}.xlsx",response) ;
+        EasyPoiUtil.exportExcel(result.getRecords(),"${table.comment!}","第一页",${entity}Vo.class,"${table.comment!}.xlsx",response) ;
     }
 
     </#if>
